@@ -75,6 +75,7 @@ vim.pack.add({
     { src = 'https://github.com/ibhagwan/fzf-lua' },
     { src = 'https://github.com/xiyaowong/transparent.nvim' },
     { src = 'https://github.com/rebelot/kanagawa.nvim' },
+    { src = 'https://github.com/neanias/everforest-nvim' },
     { src = 'https://github.com/tpope/vim-repeat' },
     { src = 'https://codeberg.org/andyg/leap.nvim' },
     { src = 'https://github.com/Saghen/blink.cmp' },
@@ -96,8 +97,13 @@ vim.pack.add({
     { src = "https://github.com/scalameta/nvim-metals" },
 })
 
--- theme set
-vim.cmd("colorscheme kanagawa-wave")
+-- theme kanagawa
+-- vim.cmd("colorscheme kanagawa-wave")
+-- theme everforest
+require('everforest').setup({
+    transparent_background_level = 1,
+})
+vim.cmd("colorscheme everforest")
 
 -- Plugin Config
 -- Lualine config
@@ -122,8 +128,8 @@ require('conform').setup({
         rust = { "rustfmt" },
 
         -- 🟦 C++
-        c = { "clang_format" },
-        cpp = { "clang_format" },
+        c = { "clang-format" },
+        cpp = { "clang-format" },
 
         -- 🐹 Go
         go = { "gofmt", "goimports", stop_after_first = true },
@@ -148,7 +154,7 @@ require('conform').setup({
     formatters = {
         ["clang-format"] = {
             prepend_args = {
-                "--style={IndentWidth: 4, TabWidth: 4, UserTab: Never }",
+                "--style={IndentWidth: 4, TabWidth: 4, UseTab: Never }",
             }
         }
     }
@@ -161,6 +167,18 @@ require('nvim-tree').setup({
     },
     filters = {
         dotfiles = false,
+        git_ignored = false,
+        custom = {
+            "^ndoe_modules$",
+            ".git",
+            ".codex",
+            ".agent",
+            ".bsp",
+            ".metals",
+            ".github",
+            "out",
+            "obj_dir",
+        }
     }
 })
 keymap('n', '<leader>e', '<cmd>NvimTreeToggle<CR>', { desc = '切换文件树' })
@@ -377,6 +395,7 @@ require("transparent").setup({
         "WhichKeyFloat",
         "WhichKeyBorder",
         "WhichKeyValue",
+
     },
     exclude_groups = {},
     on_clear = function() end,
